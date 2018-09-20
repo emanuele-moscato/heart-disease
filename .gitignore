@@ -1,0 +1,4 @@
+.git
+app/__pycache__
+modules/__pycache__
+notebooks/.ipynb_checkpoints
