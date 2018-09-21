@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output, State
 from sklearn.externals import joblib
 import pandas as pd
 import numpy as np
+import os
 import sys
 sys.path.insert(0, "../modules/")
 from utils import cols_dummies
@@ -19,9 +20,9 @@ app = dash.Dash()
 
 @app.server.route('/favicon.ico')
 def favicon():
-    return send_from_directory(
-        '.static/',
-        'favicon.ico'
+    return app.server.send_static_file(
+        os.path.join(app.root_path, 'static'),
+        '400x400SML-01.png'
     )
 
 app.css.append_css({'external_url': './static/style.css'})
@@ -35,7 +36,8 @@ app.layout = html.Div(children=[
     ),
     html.Div(
         id='buttons-container',
-        children=buttons
+        children=buttons,
+        style={'marginTop':'15px'}
     ),
     html.Div(
         id='prediction-container',
@@ -235,8 +237,6 @@ def predict(n_clicks, age, sex, cp, trestbps, chol, fbs, restecg, thalach,
         data_df,
         columns=['ca', 'thal']
     ).iloc[0]).fillna(0)
-    
-    print(X)
     
     with open("../data/X_m.pkl", "rb") as f:
         X_m = pickle.load(f)
