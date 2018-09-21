@@ -272,9 +272,18 @@ def predict(n_clicks, age, sex, cp, trestbps, chol, fbs, restecg, thalach,
             color='orange'    
         )
     )
+    
+    layout = go.Layout(
+        xaxis=dict(
+            title='age'
+        ),
+        yaxis=dict(
+            title='probability'
+        )
+    )
 
     if n_clicks:
-        return go.Figure(data=[trace_m, trace_f, trace_pred])
+        return go.Figure(data=[trace_m, trace_f, trace_pred], layout=layout)
     else:
         pass
 
